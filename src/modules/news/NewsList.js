@@ -9,10 +9,11 @@
 
 import React from "react";
 import { Card, Icon, Image, Segment, Dimmer, Loader } from "semantic-ui-react";
+import PropTypes from "prop-types";
 import axios from "axios";
 
-const key = "d2a9faddb4f042569c1572f2a1a602f0";
-const sources = `https://newsapi.org/v2/top-headlines?country=id&apiKey=${key}`;
+const key = "988f3ffaa6044a0bb31c0eb721ff57d1";
+const sources = `https://newsapi.org/v2/everything?apiKey=${key}`;
 const dariSemantic = "https://react.semantic-ui.com";
 const iconLocator = "https://icon-locator.herokuapp.com/icon?size=70..120..200";
 
@@ -22,13 +23,15 @@ class NewsList extends React.Component {
     this.state = {
       data: [],
       loading: true,
-      error: null
+      error: null,
+      sourceId: this.props.match.params.id
     };
   }
 
   componentDidMount() {
+    const { sourceId } = this.state;
     axios
-      .get(sources)
+      .get(`${sources}&sources=${sourceId}`)
       .then(result => {
         console.log(result, "ini sukses");
         this.setState({
@@ -46,7 +49,8 @@ class NewsList extends React.Component {
   }
 
   render() {
-    const { data, loading, error } = this.state;
+    const { data, loading, error, sourceId } = this.state;
+    console.log(sourceId);
 
     if (loading) {
       return (
@@ -94,5 +98,9 @@ class NewsList extends React.Component {
     );
   }
 }
+
+NewsList.propTypes = {
+  match: PropTypes.object
+};
 
 export default NewsList;

@@ -3,9 +3,10 @@
 // yang mau di tampilkan adalah sumber berita
 import React from "react";
 import { Card, Icon, Image, Segment, Dimmer, Loader } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
-const key = "aeaf955c0ad14b8799f915ebde374d6c";
+const key = "988f3ffaa6044a0bb31c0eb721ff57d1";
 const sources = `https://newsapi.org/v2/sources?apiKey=${key}`;
 const dariSemantic = "https://react.semantic-ui.com";
 const iconLocator = "https://icon-locator.herokuapp.com/icon?size=70..120..200";
@@ -60,7 +61,7 @@ class SourceList extends React.Component {
       <Card.Group>
         {data.map(source => {
           return (
-            <Card key={source.id}>
+            <Card as={Link} to={`/news/${source.id}`} key={source.id}>
               <Card.Content>
                 <Image size="small" src={`${iconLocator}&url=${source.url}`} />
                 <Card.Description>{source.name}</Card.Description>
